@@ -1,0 +1,5 @@
+-swf chirrup.swf
+-swf-version 9
+-swf-header 400:140:24:FFFFFF
+-swf-lib library.swf
+-main Chirp
