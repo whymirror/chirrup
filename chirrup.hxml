@@ -8,5 +8,5 @@
 
 -swf chirplay.swf
 -swf-version 9
--swf-header 400:140:24:FFFFFF
+-swf-header 400:40:24:FFFFFF
 -main Play

@@ -19,7 +19,8 @@ class Rec extends Base {
   static var playButton : SimpleButton;
 	static var countdown : TextField;
 	static var countfont : TextFormat;
-	static var stat : TextField;
+  static var countclip : MovieClip;
+	static var soundsgood : MovieClip;
 
   static var seconds : Float = 8;
 
@@ -46,7 +47,6 @@ class Rec extends Base {
   }
 
   static function startRecording(e) {
-    stat.text = "Connecting...";
     stopButton.visible = true;
     recButton.visible = false;
     Base.record(uuid + ".flv", function(ns) {
@@ -57,16 +57,26 @@ class Rec extends Base {
   }
 
   static function playRecording(e) {
-    stat.text = "Playing.";
     Base.play(uuid + ".flv");
   }
 
+  static function reRecord(e) {
+    recButton.visible = true;
+    stopButton.visible = false;
+    playButton.visible = false;
+    countdown.text = "8";
+    countdown.setTextFormat(countfont);
+    countclip.visible = true;
+    soundsgood.visible = false;
+  }
+
   static function stopRecording(e) {
-    stat.text = "Stopped";
     Base.stop();
     clock.stop();
     stopButton.visible = false;
     playButton.visible = true;
+    countclip.visible = false;
+    soundsgood.visible = true;
   }
 
   static function main() {
@@ -141,40 +151,61 @@ class Rec extends Base {
     mcmed.bold = true;
     mcmed.color = 0;
 
-    var mcc = new MovieClip();
+    countclip = new MovieClip();
     var mct = new TextField();
     mct.text = "You have";
     mct.setTextFormat(mcmed);
-    mcc.addChild(mct);
+    countclip.addChild(mct);
 
     countdown = new TextField();
     countdown.text = "8";
     countdown.setTextFormat(countfont);
-    mcc.addChild(countdown);
+    countclip.addChild(countdown);
     countdown.x = 10;
     countdown.y = 4;
-		flash.Lib.current.addChild(mcc);
+		flash.Lib.current.addChild(countclip);
 
     var mct2 = new TextField();
     mct2.text = "seconds";
     mct2.setTextFormat(mcmed);
     mct2.x = 3;
     mct2.y = 72;
-    mcc.addChild(mct2);
+    countclip.addChild(mct2);
 
-    mcc.x = 220;
-    mcc.y = 20;
+    countclip.x = 220;
+    countclip.y = 20;
 
     //
     // Sounds good?
     //
-		stat = new TextField();
-		stat.text = "Stopped.";
-		stat.width = 380;
-		stat.height = 18;
-		stat.selectable = false;
-		stat.x = 2;
-    stat.y = 124;
-		flash.Lib.current.addChild(stat);
+    var med = new TextFormat();
+    med.font = "Verdana";
+    med.size = 25;
+    med.bold = true;
+    med.color = 0;
+
+    var soundstxt = new TextField();
+    soundstxt.text = "Sounds good?";
+    soundstxt.width = 250;
+    soundstxt.height = 50;
+    soundstxt.setTextFormat(med);
+
+    var okLink = Base.addLink("OK, make it tweet!", function(e) {});
+    var noLink = Base.addLink("Nah, record it again.", reRecord);
+
+    soundsgood = new MovieClip();
+    soundsgood.addChild(soundstxt);
+    soundsgood.addChild(okLink);
+    soundsgood.addChild(noLink);
+
+    okLink.x = 30;
+    okLink.y = 40;
+    noLink.x = 20;
+    noLink.y = 62;
+
+		flash.Lib.current.addChild(soundsgood);
+    soundsgood.visible = false;
+    soundsgood.x = 170;
+    soundsgood.y = 20;
   }
 }

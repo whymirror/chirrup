@@ -6,6 +6,7 @@ import flash.net.ObjectEncoding;
 import flash.system.Security;
 import flash.system.SecurityPanel;
 import flash.text.TextField;
+import flash.text.TextFormat;
 
 class Base {
 
@@ -17,7 +18,6 @@ class Base {
   static var mic : Microphone;
 
   static var httpExp : EReg = ~/^http:\/\//;
-  static var bpos : Float = 2;
 
   static var DEGTORAD:Float = Math.PI/180;
   static var a:Float = Math.tan( 22.5 * DEGTORAD);
@@ -91,32 +91,53 @@ class Base {
     }
   }
 
-	static function addButton( text, onClick ) {
+	static function addLink( text, onClick ) {
+    var f = new TextFormat();
+    f.font = "Verdana";
+    f.size = 12;
+    f.color = 0x5599AA;
+    f.underline = true;
+
+    var f2 = new TextFormat();
+    f2.font = "Verdana";
+    f2.size = 12;
+    f2.color = 0xAA9955;
+    f2.underline = true;
+
 		var t = new TextField();
 		t.text = text;
-		t.width = t.textWidth + 6;
+		t.width = t.textWidth + 36;
 		t.height = 18;
 		t.selectable = false;
+    t.setTextFormat(f);
 		t.x = 2;
 
+		var t2 = new TextField();
+		t2.text = text;
+		t2.width = t.textWidth + 36;
+		t2.height = 18;
+		t2.selectable = false;
+    t2.setTextFormat(f2);
+		t2.x = 2;
+
+		var a = new flash.display.MovieClip();
+		a.addChild(t);
+
 		var b = new flash.display.MovieClip();
-		b.graphics.beginFill(0xFFEEDD);
-		b.graphics.lineStyle(2,0x000000);
+		b.graphics.beginFill(0);
 		b.graphics.drawRect(0,0,t.width,18);
-		b.addChild(t);
+
+		var c = new flash.display.MovieClip();
+		c.addChild(t2);
 
 		var sb = new flash.display.SimpleButton();
-		sb.upState = b;
-		sb.overState = b;
-		sb.downState = b;
+		sb.upState = a;
+		sb.overState = c;
+		sb.downState = c;
 		sb.hitTestState = b;
 		sb.useHandCursor = true;
-		sb.addEventListener(flash.events.MouseEvent.CLICK, callback(doClick, onClick));
-		flash.Lib.current.addChild(sb);
-
-		sb.x = bpos;
-		sb.y = 2;
-		bpos += t.width + 5;
+		sb.addEventListener(flash.events.MouseEvent.CLICK, onClick);
+    return sb;
 	}
 
   static function startConnect(host, func) {

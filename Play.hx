@@ -8,7 +8,7 @@ class Play extends Base {
   static var file : String;
   static var re : EReg = ~/\/(\w+)\/(\w+)$/;
 
-  static function playRecording() {
+  static function playRecording(e) {
     Base.play(Base.server + "/new.flv");
   }
 
@@ -17,6 +17,6 @@ class Play extends Base {
 		file = flash.Lib.current.loaderInfo.parameters.file;
     if (file == null && re.match(url))
       file = re.matched(1) + re.matched(2);
-    Base.addButton("Play", playRecording);
+		flash.Lib.current.addChild(Base.addLink("Play", playRecording));
   }
 }
