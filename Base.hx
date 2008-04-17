@@ -19,6 +19,22 @@ class Base {
   static var httpExp : EReg = ~/^http:\/\//;
   static var bpos : Float = 2;
 
+  static var DEGTORAD:Float = Math.PI/180;
+  static var a:Float = Math.tan( 22.5 * DEGTORAD);
+
+  static var UID_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  
+  public static function random(?size : Int) : String
+  {
+    if(size == null) size = 32;
+    var nchars = UID_CHARS.length;
+    var uid = "";
+    for (i in 0 ... size){
+      uid += UID_CHARS.charAt( Std.int(Math.random() * nchars) );
+    }
+    return uid;
+  }
+
   static function privacyPane() {
     Security.showSettings(SecurityPanel.PRIVACY);
   }
@@ -38,6 +54,42 @@ class Base {
 			doTrace(e);
 		}
 	}
+
+  static function addBitmap( bmp ) {
+    flash.Lib.current.addChild(new flash.display.Bitmap(bmp, flash.display.PixelSnapping.AUTO, true));
+  }
+
+  static function movieBitmap( bmp ) {
+		var mc = new flash.display.MovieClip();
+    mc.addChild(new flash.display.Bitmap(bmp, flash.display.PixelSnapping.AUTO, true));
+    return mc;
+  }
+
+  static function addBitmapButton( bmpOff, bmpOn, bmpHit, onClick )
+  {
+		var sb = new flash.display.SimpleButton();
+		sb.upState = movieBitmap(bmpOff);
+		sb.overState = movieBitmap(bmpOff);
+		sb.downState = movieBitmap(bmpOn);
+		sb.hitTestState = bmpHit;
+		sb.useHandCursor = true;
+		sb.addEventListener(flash.events.MouseEvent.CLICK, onClick);
+		flash.Lib.current.addChild(sb);
+    return sb;
+  }
+
+  static function drawCircle( mc:flash.display.MovieClip, x:Float, y:Float, r:Float )
+  {
+    mc.graphics.moveTo( x + r, y );
+
+    for (i in 0...8) {
+      var endX = x + r * Math.cos( (i + 1) * 45 * DEGTORAD);
+      var endY = y + r * Math.sin( (i + 1) * 45 * DEGTORAD);
+      var controlX = endX + r * a * Math.cos( ((i + 1) * 45 - 90) * DEGTORAD);
+      var controlY = endY + r * a * Math.sin( ((i + 1) * 45 - 90) * DEGTORAD);
+      mc.graphics.curveTo( controlX, controlY, endX, endY);
+    }
+  }
 
 	static function addButton( text, onClick ) {
 		var t = new TextField();

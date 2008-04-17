@@ -3,7 +3,11 @@
   <background color="#ffffff"/>
   <frame>
   <library>
-    <bitmap id="ShoesPng" name="ShoesPng" import="library/shoes.png" />
+    <bitmap id="RecOffPng"   name="RecOffPng"   import="library/chirec-rec1.png" />
+    <bitmap id="RecOnPng"    name="RecOnPng"    import="library/chirec-rec2.png" />
+    <bitmap id="RecHoverPng" name="RecHoverPng" import="library/chirec-rec4.png" />
+    <bitmap id="PlayUpPng"   name="PlayUpPng"   import="library/chirec-play1.png" />
+    <bitmap id="PlayDownPng" name="PlayDownPng" import="library/chirec-play2.png" />
   </library>
   </frame>
 </movie>
