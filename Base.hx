@@ -10,8 +10,8 @@ import flash.text.TextFormat;
 
 class Base {
 
-  static var rtmp = "rtmp://localhost";
-  static var server = "http://localhost:3000";
+  static var rtmp = "rtmp://chirrp.net";
+  static var server = "http://chirrp.net";
 
   static var nc : NetConnection;
   static var ns : NetStream;

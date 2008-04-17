@@ -1,6 +1,7 @@
 import flash.display.BitmapData;
 import flash.display.MovieClip;
 import flash.display.SimpleButton;
+import flash.external.ExternalInterface;
 import flash.net.NetStream;
 import flash.text.TextField;
 import flash.text.TextFormat;
@@ -25,6 +26,7 @@ class Rec extends Base {
   static var seconds : Float = 8;
 
   static var uuid : String;
+  static var user : String;
   static var url : String;
   static var clock : Timer;
   static var start : Float = 0;
@@ -70,6 +72,14 @@ class Rec extends Base {
     soundsgood.visible = false;
   }
 
+  static function publish(e) {
+    var r = new haxe.Http(Base.server + "/publish?id=" + uuid + "&user=" + user);
+    r.onData = function(r) {
+      ExternalInterface.call("window.location.reload");
+    };
+    r.request(false);
+  }
+
   static function stopRecording(e) {
     Base.stop();
     clock.stop();
@@ -81,6 +91,7 @@ class Rec extends Base {
 
   static function main() {
     uuid = Base.random(32);
+		user = flash.Lib.current.loaderInfo.parameters.user;
 
     //
     // Record button
@@ -190,7 +201,7 @@ class Rec extends Base {
     soundstxt.height = 50;
     soundstxt.setTextFormat(med);
 
-    var okLink = Base.addLink("OK, I am very done!", function(e) {});
+    var okLink = Base.addLink("OK, I am very done!", publish);
     var noLink = Base.addLink("Nah, record it again.", reRecord);
 
     soundsgood = new MovieClip();
