@@ -190,7 +190,7 @@ class Rec extends Base {
     soundstxt.height = 50;
     soundstxt.setTextFormat(med);
 
-    var okLink = Base.addLink("OK, make it tweet!", function(e) {});
+    var okLink = Base.addLink("OK, I am very done!", function(e) {});
     var noLink = Base.addLink("Nah, record it again.", reRecord);
 
     soundsgood = new MovieClip();
