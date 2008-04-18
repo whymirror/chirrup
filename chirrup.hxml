@@ -1,7 +1,7 @@
 -swf chirec.swf
 -swf-version 9
 -swf-header 400:140:24:FFFFFF
--swf-lib chirec-i.swf
+-swf-lib lib-chirec.swf
 -main Rec
 
 --next
@@ -9,5 +9,5 @@
 -swf chirplay.swf
 -swf-version 9
 -swf-header 70:15:24:FFFFFF
--swf-lib chiplay-i.swf
+-swf-lib lib-chiplay.swf
 -main Play
