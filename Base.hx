@@ -12,6 +12,7 @@ class Base {
 
   static var rtmp = "rtmp://chirrp.net";
   static var server = "http://chirrp.net";
+  static var seconds : Float = 8;
 
   static var nc : NetConnection;
   static var ns : NetStream;
@@ -73,7 +74,7 @@ class Base {
 		sb.downState = movieBitmap(bmpOn);
 		sb.hitTestState = bmpHit;
 		sb.useHandCursor = true;
-		sb.addEventListener(flash.events.MouseEvent.CLICK, onClick);
+		sb.addEventListener(flash.events.MouseEvent.MOUSE_DOWN, onClick);
 		flash.Lib.current.addChild(sb);
     return sb;
   }
@@ -95,13 +96,13 @@ class Base {
     var f = new TextFormat();
     f.font = "Verdana";
     f.size = 12;
-    f.color = 0x5599AA;
+    f.color = 0x4488AA;
     f.underline = true;
 
     var f2 = new TextFormat();
     f2.font = "Verdana";
     f2.size = 12;
-    f2.color = 0xAA9955;
+    f2.color = 0xAA6633;
     f2.underline = true;
 
 		var t = new TextField();

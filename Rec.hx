@@ -23,25 +23,25 @@ class Rec extends Base {
   static var countclip : MovieClip;
 	static var soundsgood : MovieClip;
 
-  static var seconds : Float = 8;
+  static var tokenExp : EReg = ~/^200 token (\w+)$/;
 
   static var uuid : String;
   static var user : String;
   static var url : String;
   static var clock : Timer;
   static var start : Float = 0;
+  static var used : Float = 0;
 
   static function timeRecording() {
-    var used : Float;
     if (Base.elapsedTime() > 0) {
       if (start == 0) {
         start = Timer.stamp();
       }
 
       used = (Timer.stamp() - start);
-      countdown.text = "" + Std.int(seconds - used);
+      countdown.text = "" + Std.int(Base.seconds - used);
       countdown.setTextFormat(countfont);
-      if (used >= seconds) {
+      if (used >= Base.seconds) {
         stopRecording(null);
         clock.stop();
       }
@@ -73,9 +73,15 @@ class Rec extends Base {
   }
 
   static function publish(e) {
-    var r = new haxe.Http(Base.server + "/publish?id=" + uuid + "&user=" + user);
-    r.onData = function(r) {
-      ExternalInterface.call("window.location.reload");
+    soundsgood.visible = false;
+    var r = new haxe.Http(Base.server + "/publish?id=" + uuid + "&user=" + user + "&timing=" + Std.int(used * 1000));
+    r.onData = function(r)
+    {
+      if (tokenExp.match(r))
+      {
+        var token = tokenExp.matched(1);
+        ExternalInterface.call("finishChirrp", token);
+      }
     };
     r.request(false);
   }
@@ -201,7 +207,7 @@ class Rec extends Base {
     soundstxt.height = 50;
     soundstxt.setTextFormat(med);
 
-    var okLink = Base.addLink("OK, I am very done!", publish);
+    var okLink = Base.addLink("OK, I'm all done!", publish);
     var noLink = Base.addLink("Nah, record it again.", reRecord);
 
     soundsgood = new MovieClip();

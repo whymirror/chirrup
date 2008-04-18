@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<movie version="9" width="320" height="240" framerate="12">
+  <background color="#ffffff"/>
+  <frame>
+  <library>
+    <bitmap id="PlayOffPng"   name="PlayOffPng"   import="library/chirplay-1.png" />
+    <bitmap id="PlayOnPng"    name="PlayOnPng"    import="library/chirplay-2.png" />
+  </library>
+  </frame>
+</movie>

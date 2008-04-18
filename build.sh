@@ -1,3 +1,4 @@
 #!/bin/sh
-swfmill simple library.xml library.swf
+swfmill simple chirec.xml chirec-i.swf
+swfmill simple chiplay.xml chiplay-i.swf
 haxe chirrup.hxml
